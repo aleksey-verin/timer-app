@@ -7,7 +7,6 @@ import {
   renderForContent,
   colorsStorage,
   dataForUIStorage,
-  // langStorage,
 } from './index.js'
 import { STORAGE } from './storage.js'
 import { Storage } from './storage.js'
@@ -19,9 +18,7 @@ if (!lang) {
   lang = 'eng'
 }
 
-UI_ELEMENTS.BUTTONS.colorsButtons.forEach((item) =>
-  item.addEventListener('click', changeColor)
-)
+UI_ELEMENTS.BUTTONS.colorsButtons.forEach((item) => item.addEventListener('click', changeColor))
 function changeColor() {
   if (this.classList.contains('button-color')) {
     colors.color1 = '#' + Math.random().toString(16).substr(-6)
@@ -43,10 +40,7 @@ function changeColor() {
 UI_ELEMENTS.BUTTONS.buttonEdit.addEventListener('click', showModalWindowForEdit)
 function showModalWindowForEdit() {
   UI_ELEMENTS.MODAL_WINDOW.container.classList.add('active')
-  UI_ELEMENTS.MODAL_WINDOW.container.addEventListener(
-    'click',
-    closeModalWindowByClickOutside
-  )
+  UI_ELEMENTS.MODAL_WINDOW.container.addEventListener('click', closeModalWindowByClickOutside)
 }
 function closeModalWindowByClickOutside() {
   if (event.target.classList.contains('container-edit')) {
@@ -68,10 +62,7 @@ function makeChanges(event) {
   dataForUIStorage.set(dataForUI) // <<======>>
 }
 
-UI_ELEMENTS.MODAL_WINDOW.resetButton.addEventListener(
-  'click',
-  resetTitleAndDate
-)
+UI_ELEMENTS.MODAL_WINDOW.resetButton.addEventListener('click', resetTitleAndDate)
 function resetTitleAndDate() {
   event.preventDefault()
   dataForUI.title = CONTENT.title[lang]

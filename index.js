@@ -3,15 +3,6 @@ import CONTENT from './content.js'
 import { lang } from './handlers.js'
 import { STORAGE } from './storage.js'
 import { Storage } from './storage.js'
-import {
-  format,
-  formatDuration,
-  hoursToMilliseconds,
-  hoursToMinutes,
-  intervalToDuration,
-  millisecondsToHours,
-  millisecondsToMinutes,
-} from 'date-fns'
 
 export const colorsStorage = new Storage('colors', STORAGE.LOCAL)
 export const dataForUIStorage = new Storage('dataForUI', STORAGE.LOCAL)
@@ -55,28 +46,14 @@ function render() {
 
   const tempTimeZone = currentDate.getTimezoneOffset() / -60
   let sign = tempTimeZone >= 0 ? '+' : '-'
-  let userTimeZone =
-    String(tempTimeZone).length < 2
-      ? sign + 0 + tempTimeZone
-      : sign + tempTimeZone
+  let userTimeZone = String(tempTimeZone).length < 2 ? sign + 0 + tempTimeZone : sign + tempTimeZone
 
   let dateWeNeed
   if (dataForUI) {
-    dateWeNeed = Date.parse(
-      `${dataForUI.date}T${dataForUI.time}:00.000${userTimeZone}:00`
-    )
+    dateWeNeed = Date.parse(`${dataForUI.date}T${dataForUI.time}:00.000${userTimeZone}:00`)
   } else {
     dateWeNeed = Date.parse(`${nextYear}-01-01T00:00:00.000${userTimeZone}:00`)
   }
-
-  // const newDifference = intervalToDuration({
-  //   start: currentDate,
-  //   end: new Date(2024, 0, 1, 0, 0, 0),
-  // })
-  // console.log(newDifference)
-
-  // const myDays = formatDuration(newDifference, { format: ['days'] })
-  // console.log(myDays)
 
   const deference = dateWeNeed - currentDate
 
@@ -90,16 +67,6 @@ function render() {
 
 function getTime(deference, time) {
   if (deference > 0) {
-    // const myDays = millisecondsToHours(deference / 24)
-    // let remainTime = deference - hoursToMilliseconds(myDays * 24)
-    // console.log(myDays)
-    // const myHours = millisecondsToHours(remainTime)
-    // let remainTime2 = deference - remainTime
-    // console.log(myHours)
-    // const myMinutes = millisecondsToMinutes(remainTime2)
-    // console.log(myMinutes)
-    // const myMinutes = deference -
-
     const days = Math.floor(deference / 1000 / 60 / 60 / 24)
     time.daysString = String(days)
     if (time.daysString.length === 1) {
@@ -109,18 +76,14 @@ function getTime(deference, time) {
       time.daysString = '0' + time.daysString
     }
 
-    const hours = Math.floor(
-      (deference - days * 1000 * 60 * 60 * 24) / 1000 / 60 / 60
-    )
+    const hours = Math.floor((deference - days * 1000 * 60 * 60 * 24) / 1000 / 60 / 60)
     time.hoursString = String(hours)
     if (time.hoursString.length < 2) {
       time.hoursString = '0' + time.hoursString
     }
 
     const minutes = Math.floor(
-      (deference - days * 1000 * 60 * 60 * 24 - hours * 1000 * 60 * 60) /
-        1000 /
-        60
+      (deference - days * 1000 * 60 * 60 * 24 - hours * 1000 * 60 * 60) / 1000 / 60
     )
     time.minutesString = String(minutes)
     if (time.minutesString.length < 2) {
@@ -128,11 +91,7 @@ function getTime(deference, time) {
     }
 
     const seconds = Math.floor(
-      (deference -
-        days * 1000 * 60 * 60 * 24 -
-        hours * 1000 * 60 * 60 -
-        minutes * 1000 * 60) /
-        1000
+      (deference - days * 1000 * 60 * 60 * 24 - hours * 1000 * 60 * 60 - minutes * 1000 * 60) / 1000
     )
     time.secondsString = String(seconds)
     if (time.secondsString.length < 2) {
@@ -176,25 +135,20 @@ export function renderForContent(lang) {
   UI_ELEMENTS.SUBTITLES.minutes.textContent = CONTENT.subtitle.minutes[lang]
   UI_ELEMENTS.SUBTITLES.seconds.textContent = CONTENT.subtitle.seconds[lang]
   UI_ELEMENTS.BUTTONS.buttonColor.textContent = CONTENT.buttons.color[lang]
-  UI_ELEMENTS.BUTTONS.buttonGradient.textContent =
-    CONTENT.buttons.gradient[lang]
+  UI_ELEMENTS.BUTTONS.buttonGradient.textContent = CONTENT.buttons.gradient[lang]
   UI_ELEMENTS.BUTTONS.buttonBlack.textContent = CONTENT.buttons.black[lang]
   UI_ELEMENTS.BUTTONS.buttonEdit.textContent = CONTENT.buttons.edit[lang]
 
   UI_ELEMENTS.MODAL_WINDOW.label.textContent = CONTENT.modalWindow.label[lang]
   UI_ELEMENTS.MODAL_WINDOW.inputForTitle.value = CONTENT.modalWindow.input[lang]
-  UI_ELEMENTS.MODAL_WINDOW.makeChangesButton.textContent =
-    CONTENT.modalWindow.buttonEdit[lang]
-  UI_ELEMENTS.MODAL_WINDOW.resetButton.textContent =
-    CONTENT.modalWindow.buttonReset[lang]
+  UI_ELEMENTS.MODAL_WINDOW.makeChangesButton.textContent = CONTENT.modalWindow.buttonEdit[lang]
+  UI_ELEMENTS.MODAL_WINDOW.resetButton.textContent = CONTENT.modalWindow.buttonReset[lang]
 
   if (lang === 'rus' || lang === 'esp') {
     UI_ELEMENTS.BUTTONS.allButtons.forEach((item) => item.classList.add('min'))
     UI_ELEMENTS.MODAL_WINDOW.makeChangesButton.classList.add('min')
   } else {
-    UI_ELEMENTS.BUTTONS.allButtons.forEach((item) =>
-      item.classList.remove('min')
-    )
+    UI_ELEMENTS.BUTTONS.allButtons.forEach((item) => item.classList.remove('min'))
     UI_ELEMENTS.MODAL_WINDOW.makeChangesButton.classList.remove('min')
   }
 }

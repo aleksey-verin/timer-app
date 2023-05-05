@@ -72,8 +72,7 @@ npm parcel index.html
 ## Built With
 
 - Native JavaScript
-- date-fns
-- SCSS
+- CSS
 
 Deployed with Github Pages.
 
