@@ -1,7 +1,3 @@
-# timer
-
-https://aleksey-verin.github.io/timer/
-
 # Timer App
 
 ## Summary
